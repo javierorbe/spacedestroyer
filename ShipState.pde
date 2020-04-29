@@ -1,0 +1,3 @@
+enum ShipState {
+  IDLE, ATTACKING  
+}
