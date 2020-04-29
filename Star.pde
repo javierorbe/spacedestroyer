@@ -12,14 +12,15 @@ class Star {
     pz = z;
   }
 
-  void show(float opacity) {
+  void show(float speed, float opacity) {
     float sx = map(x / z, 0, 1, 0, width);
     float sy = map(y / z, 0, 1, 0, height);
     
     float px = map(x / pz, 0, 1, 0, width);
     float py = map(y / pz, 0, 1, 0, height);
     
-    stroke(255, 255, 255, opacity);
+    float inverse = 255 - map(speed, 0, 255, 0, 200);
+    stroke(255, inverse, inverse, opacity);
     line(px, py, sx, sy);
   }
 

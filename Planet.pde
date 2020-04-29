@@ -12,7 +12,7 @@ class Planet {
     
     translate(position.x, position.y);
     
-    rotate(radians(frameCount % (360 * 8)) / 8);
+    rotate(radians(frameCount % (360 * 32)) / 32);
     
     image(image, -image.width / 2, -image.height / 2);
     

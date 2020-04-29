@@ -32,9 +32,13 @@ class Intro {
           increasing = false;
         }
       } else {
-        speed /= 1.10;
+        if (speed > 100) {
+          speed /= 1.05;
+        } else {
+          speed /= 1.15;
+        }
         
-        if (speed < 0.25) {
+        if (speed < 0.5) {
           endCallback.run();
         }
       }
@@ -43,12 +47,12 @@ class Intro {
     if (increasing || speed > 50) {
       for (int i = 0; i < stars.length; i++) {
         stars[i].update(speed);
-        stars[i].show(255);
+        stars[i].show(speed, 255);
       }
     } else {
       for (int i = 0; i < stars.length; i++) {
         stars[i].update(speed);
-        stars[i].show(map(speed, 0, 50, 0, 255));
+        stars[i].show(speed, map(speed, 0, 50, 0, 255));
       }
     }
     

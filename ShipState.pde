@@ -1,3 +1,5 @@
 enum ShipState {
-  IDLE, ATTACKING  
+  IDLE,
+  PREPARING_ATTACK,
+  ATTACKING
 }
