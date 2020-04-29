@@ -22,9 +22,13 @@ Intro intro;
 
 BouncingNumber backgroundAnimation = new BouncingNumber(210, 255, 255);
 
+PFont titleFont;
+
 void setup() {
    size(1500, 750);
    frameRate(24);
+   
+   titleFont = createFont("spacebar_font.ttf", 32);
    
    stars = loadImage("stars.png");
    stars.resize(width, height);
@@ -36,10 +40,10 @@ void setup() {
    coldNebula = loadImage("cold_nebula.png");
    smallPlanets = loadImage("small_planets.png");
    
-   planets.add(new Planet(new PVector(1300, 200), loadImage("sun.png")));
-   planets.add(new Planet(new PVector(1200, 450), loadImage("red_giant.png")));
+   planets.add(new Planet(new PVector(1300, 200), loadImage("sun.png"), true));
+   planets.add(new Planet(new PVector(1200, 450), loadImage("red_giant.png"), false));
 
-   ship = new Ship(new PVector(width / 2, height / 2));
+   ship = new Ship(new PVector(width / 2, height / 2), loadImage("bullet.png"));
    
    state = SimulationState.INTRO;
    intro = new Intro(new Runnable() {
@@ -66,6 +70,9 @@ void draw() {
     } else {
       background(0);
       textAlign(CENTER);
+      textFont(titleFont, 64);
+      text("Space Destroyer", width / 2, height / 2);
+      textFont(titleFont, 16);
       text("Press the space bar", width / 2, height - 128);
     }
     
@@ -109,7 +116,7 @@ void keyPressed() {
   
   if (key == 'l') {
     if (state == SimulationState.MAIN) {
-      ship.attack(planets.get(1));
+      ship.attack(planets.get(0));
     }
   }
 }
