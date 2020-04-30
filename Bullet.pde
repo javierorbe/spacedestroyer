@@ -12,7 +12,9 @@ class Bullet {
   
   float lerpFactor = 0;
   
-  Bullet(PImage sprite, float initialScaleFactor, PVector position, float angle, PVector destPosition) {
+  Runnable reachCallback;
+  
+  Bullet(PImage sprite, float initialScaleFactor, PVector position, float angle, PVector destPosition, Runnable reachCallback) {
     this.sprite = sprite;
     origWidth = width * initialScaleFactor;
     origHeight = height * initialScaleFactor;
@@ -22,6 +24,8 @@ class Bullet {
     origPosition = position.copy();
     this.angle = angle;
     this.destPosition = destPosition;
+    
+    this.reachCallback = reachCallback;
   }
   
   void show() {
@@ -47,7 +51,9 @@ class Bullet {
   void update() {
     if (lerpFactor < 1) {
       position = PVector.lerp(origPosition, destPosition, lerpFactor);
-      lerpFactor += 0.02;
+      lerpFactor += 0.04;
+    } else {
+      reachCallback.run();
     }
   }
 }

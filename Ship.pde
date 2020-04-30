@@ -16,7 +16,7 @@ class Ship {
   
   Ship(PVector position, PImage bulletImage) {
     this.position = position;
-    this.sprite = new AnimatedSprite("enemy", 8, 0.25, 12);
+    this.sprite = new AnimatedSprite(AnimatedSpriteResource.ENEMY, 0.25, 12);
     this.bulletImage = bulletImage;
     idle = new Sprite("enemy_idle.png", 0.25);
     state = ShipState.IDLE;
@@ -25,7 +25,7 @@ class Ship {
   void show() {
     if (state == ShipState.IDLE) {
       sprite.show(position.x, position.y);
-    } else if (state == ShipState.PREPARING_ATTACK) {
+    } else if (state == ShipState.PREPARING_ATTACK || state == ShipState.STOP_ATTACKING) {
       pushMatrix();
       translate(position.x, position.y);
       float angle = lerp(0, rotationAngle, rotationFactor);
@@ -49,12 +49,25 @@ class Ship {
     } else if (state == ShipState.PREPARING_ATTACK) {
       if (rotationFactor >= 1) {
         state = ShipState.ATTACKING;
-        bullet = new Bullet(bulletImage, 0.1, position.copy(), rotationAngle, attackingPlanet.position);
+        SoundResource.SHOOT.get().play();
+        bullet = new Bullet(bulletImage, 0.1, position.copy(), rotationAngle, attackingPlanet.position, new Runnable() {
+          @Override
+          public void run() {
+            attackingPlanet.explode();
+            state = ShipState.STOP_ATTACKING;
+          }
+        });
       } else {
         rotationFactor += 0.05;
       }
     } else if (state == ShipState.ATTACKING) {
       bullet.update();
+    } else if (state == ShipState.STOP_ATTACKING) {
+      if (rotationFactor > 0) {
+        rotationFactor -= 0.05;        
+      } else {
+        state = ShipState.IDLE;
+      }
     }
   }
 

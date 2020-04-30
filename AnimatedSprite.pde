@@ -1,28 +1,41 @@
 class AnimatedSprite {
-  PImage[] frames;
-  int frameCount;
+  private AnimatedSpriteResource resource;
+  private float scale;
   int frameIndex = 0;
   int changeRate;
   int counter = 0;
   
-  AnimatedSprite(String imageName, int count, float scale, int changeRate) {
-    frames = new PImage[count];
-    frameCount = count;
+  AnimatedSprite(AnimatedSpriteResource resource, float scale, int changeRate) {
+    this.resource = resource;
+    this.scale = scale;
     this.changeRate = changeRate;
-    for (int i = 0; i < count; i++) {
-      frames[i] = loadImage(imageName + "_" + i + ".png");
-      frames[i].resize(floor(frames[i].width * scale), floor(frames[i].height * scale));
-    }
+  }
+  
+  public int getFrameCount() {
+    return resource.getFrameCount();
+  }
+  
+  public int getFrameIndex() {
+    return frameIndex;
   }
   
   void show(float posX, float posY) {
-    if (frameIndex == frameCount) {
+    if (frameIndex == resource.getFrameCount()) {
       frameIndex = 0;
     }
     
-    PImage frame = frames[frameIndex];
+    PImage frame = resource.get()[frameIndex];
     
-    image(frame, posX - frame.width / 2, posY - frame.height / 2);
+    float w = frame.width * scale;
+    float h = frame.height * scale;
+    
+    image(
+      frame,
+      posX - w / 2,
+      posY - h / 2,
+      w,
+      h
+    );
     
     if (counter == changeRate) {
       frameIndex++;

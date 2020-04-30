@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 PImage stars;
 
 PImage violetDust;
@@ -20,14 +22,18 @@ static SimulationState state;
 
 Intro intro;
 
-BouncingNumber backgroundAnimation = new BouncingNumber(210, 255, 255);
+BouncingNumber backgroundAnimation = new BouncingNumber(200, 255, 255);
 
 PFont titleFont;
 
 void setup() {
    size(1500, 750);
    frameRate(24);
-   
+
+   ImageResource.load(this);
+   AnimatedSpriteResource.load(this);
+   SoundResource.load(this);
+
    titleFont = createFont("spacebar_font.ttf", 32);
    
    stars = loadImage("stars.png");
