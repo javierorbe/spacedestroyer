@@ -22,7 +22,8 @@ enum SoundResource {
 }
 
 enum ImageResource {
-  
+  SUN("sun.png"),
+  RED_GIANT("red_giant.png"),
   ;
   
   private String filename;

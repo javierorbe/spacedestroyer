@@ -13,11 +13,13 @@ class Ship {
   Bullet bullet;
 
   BouncingNumber idleAnimation = new BouncingNumber(-2, 2, 0);
+  private Runnable attackEndCallback;
   
-  Ship(PVector position, PImage bulletImage) {
+  Ship(PVector position, PImage bulletImage, Runnable attackEndCallback) {
     this.position = position;
     this.sprite = new AnimatedSprite(AnimatedSpriteResource.ENEMY, 0.25, 12);
     this.bulletImage = bulletImage;
+    this.attackEndCallback = attackEndCallback;
     idle = new Sprite("enemy_idle.png", 0.25);
     state = ShipState.IDLE;
   }
@@ -67,6 +69,7 @@ class Ship {
         rotationFactor -= 0.05;        
       } else {
         state = ShipState.IDLE;
+        attackEndCallback.run();
       }
     }
   }

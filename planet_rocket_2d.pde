@@ -15,7 +15,7 @@ Ship ship;
 enum SimulationState {
   INTRO,
   MAIN,
-  SHOOTING
+  SHOOTING,
 }
 
 static SimulationState state;
@@ -46,10 +46,15 @@ void setup() {
    coldNebula = loadImage("cold_nebula.png");
    smallPlanets = loadImage("small_planets.png");
    
-   planets.add(new Planet(new PVector(1300, 200), loadImage("sun.png"), true));
-   planets.add(new Planet(new PVector(1200, 450), loadImage("red_giant.png"), false));
+   planets.add(new Planet(new PVector(1300, 200), ImageResource.SUN, 200, true));
+   planets.add(new Planet(new PVector(1200, 450), ImageResource.RED_GIANT, 215, false));
 
-   ship = new Ship(new PVector(width / 2, height / 2), loadImage("bullet.png"));
+   ship = new Ship(new PVector(width / 2, height / 2), loadImage("bullet.png"), new Runnable() {
+     @Override
+     public void run() {
+       state = SimulationState.MAIN;
+     }
+   });
    
    state = SimulationState.INTRO;
    intro = new Intro(new Runnable() {
@@ -83,7 +88,7 @@ void draw() {
     }
     
     intro.show();
-  } else if (state == SimulationState.MAIN) {
+  } else if (state == SimulationState.MAIN || state == SimulationState.SHOOTING) {
     showMain();
   }
 }
@@ -123,6 +128,17 @@ void keyPressed() {
   if (key == 'l') {
     if (state == SimulationState.MAIN) {
       ship.attack(planets.get(0));
+    }
+  }
+}
+
+void mouseClicked() {
+  if (state == SimulationState.MAIN) {
+    for (Planet p : planets) {
+      if (p.isAlive() && p.testClick()) {
+        ship.attack(p);
+        break;
+      }
     }
   }
 }
