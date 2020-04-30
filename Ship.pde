@@ -1,3 +1,10 @@
+enum ShipState {
+  IDLE,
+  PREPARING_ATTACK,
+  ATTACKING,
+  STOP_ATTACKING
+}
+
 class Ship {
   
   PVector position;
@@ -13,7 +20,7 @@ class Ship {
 
   private Sprite idle;
 
-  BouncingNumber idleAnimation = new BouncingNumber(-2, 2, 0);
+  BouncingInteger idleAnimation = new BouncingInteger(-2, 2, 0, 2);
   private Runnable attackEndCallback;
   
   Ship(PVector position, PImage bulletImage, Runnable attackEndCallback) {
@@ -58,6 +65,7 @@ class Ship {
           public void run() {
             attackingPlanet.explode();
             state = ShipState.STOP_ATTACKING;
+            SoundResource.ENGINE.get().play();
           }
         });
       } else {
@@ -81,7 +89,13 @@ class Ship {
     float dx = planet.position.x - position.x;
     float dy = planet.position.y - position.y;
     rotationAngle = atan2(dy, dx) + HALF_PI;
+
+    if (rotationAngle > PI) {
+      rotationAngle -= TWO_PI;
+    }
+    
     rotationFactor = 0;
     attackingPlanet = planet;
+    SoundResource.ENGINE.get().play();
   }
 }

@@ -1,6 +1,8 @@
 enum SoundResource {
   SHOOT("shoot.wav"),
-  DEATH_FLASH("death_flash.wav")
+  DEATH_FLASH("death_flash.wav"),
+  ENGINE("engine.mp3"),
+  BACKGROUND("background.wav"),
   ;
   
   private String filename;
@@ -30,11 +32,12 @@ enum ImageResource {
   EXOPLANET3("exoplanet3.png"),
   ICE_GIANT("ice_giant.png"),
   GAS_GIANT("gas_giant.png"),
+  DUST("dust.png"),
   ;
   
   private String filename;
   private PImage image;
-  
+
   private ImageResource(String filename) {
     this.filename = filename;
   }

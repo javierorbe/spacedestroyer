@@ -22,7 +22,7 @@ static SimulationState simulationState;
 
 Intro intro;
 
-BouncingNumber backgroundAnimation = new BouncingNumber(200, 255, 255);
+BouncingInteger backgroundAnimation = new BouncingInteger(200, 255, 255);
 
 PFont titleFont;
 
@@ -36,11 +36,11 @@ void setup() {
   AnimatedSpriteResource.load(this);
   SoundResource.load(this);
 
-  titleFont = createFont("spacebar_font.ttf", 32);
+  titleFont = createFont("spacebar_font.ttf", 64);
  
   stars = loadImage("stars.png");
   stars.resize(width, height);
- 
+
   violetDust = loadImage("violet_dust.png");
   blueDust = loadImage("blue_dust.png");
   yellowDust = loadImage("yellow_dust.png");
@@ -72,6 +72,8 @@ void setup() {
       intro = null;
     }
   });
+  
+  SoundResource.BACKGROUND.get().loop();
 }
 
 void draw() {
@@ -79,8 +81,10 @@ void draw() {
   if (frameCount == 1) {
     showMain(0);
   }
-  
-  println(frameRate);
+
+  // Debug frame rate.
+  // println(frameRate);
+
   if (simulationState == SimulationState.INTRO) {
     if (intro.running) {
       if (!intro.increasing && intro.speed < 100) {

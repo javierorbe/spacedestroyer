@@ -1,6 +1,0 @@
-enum ShipState {
-  IDLE,
-  PREPARING_ATTACK,
-  ATTACKING,
-  STOP_ATTACKING
-}
