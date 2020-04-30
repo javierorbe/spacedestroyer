@@ -1,6 +1,6 @@
 class Intro {
 
-  Star[] stars = new Star[2000];
+  Star[] stars = new Star[2500];
   
   Runnable endCallback;
   float speed = 1;
@@ -35,24 +35,25 @@ class Intro {
         if (speed > 100) {
           speed /= 1.05;
         } else {
-          speed /= 1.15;
+          speed /= 1.075;
         }
         
-        if (speed < 0.5) {
+        if (speed < 1) {
           endCallback.run();
         }
       }
     }
-    
+
     if (increasing || speed > 50) {
       for (int i = 0; i < stars.length; i++) {
         stars[i].update(speed);
         stars[i].show(speed, 255);
       }
     } else {
+      float op = map(speed, 0, 50, 0, 255);
       for (int i = 0; i < stars.length; i++) {
         stars[i].update(speed);
-        stars[i].show(speed, map(speed, 0, 50, 0, 255));
+        stars[i].show(speed, op);
       }
     }
     

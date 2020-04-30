@@ -22,8 +22,14 @@ enum SoundResource {
 }
 
 enum ImageResource {
+  ENEMY_IDLE("enemy_idle.png"),
   SUN("sun.png"),
   RED_GIANT("red_giant.png"),
+  EXOPLANET1("exoplanet1.png"),
+  EXOPLANET2("exoplanet2.png"),
+  EXOPLANET3("exoplanet3.png"),
+  ICE_GIANT("ice_giant.png"),
+  GAS_GIANT("gas_giant.png"),
   ;
   
   private String filename;
@@ -47,6 +53,7 @@ enum ImageResource {
 enum AnimatedSpriteResource {
   ENEMY("enemy", 8),
   EXPLOSION("explosion", 32),
+  ASTEROID("asteroid", 10),
   ;
 
   private String name;

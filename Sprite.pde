@@ -1,12 +1,24 @@
 class Sprite {
-  PImage image;
+  private ImageResource resource;
+  private float scale;
   
-  Sprite(String filename, float scale) {
-    image = loadImage(filename);
-    image.resize(floor(image.width * scale), floor(image.height * scale));
+  Sprite(ImageResource resource, float scale) {
+    this.resource = resource;
+    this.scale = scale;
   }
   
   void show(float posX, float posY) {
-    image(image, posX - image.width / 2, posY - image.height / 2);
+    PImage img = resource.get();
+    
+    float w = img.width * scale;
+    float h = img.height * scale;
+    
+    image(
+      img,
+      posX - w / 2,
+      posY - h / 2,
+      w,
+      h
+    );
   }
 }

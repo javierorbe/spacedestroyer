@@ -3,7 +3,6 @@ class Ship {
   PVector position;
   AnimatedSprite sprite;
   ShipState state;
-  Sprite idle;
   boolean shooting = false;
   
   Planet attackingPlanet;
@@ -11,6 +10,8 @@ class Ship {
   float rotationFactor;
   PImage bulletImage;
   Bullet bullet;
+
+  private Sprite idle;
 
   BouncingNumber idleAnimation = new BouncingNumber(-2, 2, 0);
   private Runnable attackEndCallback;
@@ -20,7 +21,7 @@ class Ship {
     this.sprite = new AnimatedSprite(AnimatedSpriteResource.ENEMY, 0.25, 12);
     this.bulletImage = bulletImage;
     this.attackEndCallback = attackEndCallback;
-    idle = new Sprite("enemy_idle.png", 0.25);
+    idle = new Sprite(ImageResource.ENEMY_IDLE, 0.25);
     state = ShipState.IDLE;
   }
 
