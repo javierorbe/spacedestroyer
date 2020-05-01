@@ -65,7 +65,7 @@ void setup() {
   });
  
   simulationState = SimulationState.INTRO;
-  intro = new Intro(new Runnable() {
+  intro = new Intro(this, new Runnable() {
     @Override
     public void run() {
       simulationState = SimulationState.MAIN;

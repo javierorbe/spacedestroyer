@@ -140,7 +140,8 @@ class Planet {
 
     dustRotation = random(0, TWO_PI);
     for (int i = 0; i < AnimatedSpriteResource.ASTEROID.getFrameCount(); i++) {
-      asteroidPos.put(i, new PVector(random(-realRadius * 0.8, realRadius * 0.8), random(-realRadius * 0.8, realRadius * 0.8)));
+      float d = realRadius * 0.8;
+      asteroidPos.put(i, new PVector(random(-d, d), random(-d, d)));
       asteroidRot.put(i, random(0, TWO_PI));
     }
 

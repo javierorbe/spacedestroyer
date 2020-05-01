@@ -3,6 +3,7 @@ enum SoundResource {
   DEATH_FLASH("death_flash.wav"),
   ENGINE("engine.mp3"),
   BACKGROUND("background.wav"),
+  SPACE_STOP("space_stop.mp3"),
   ;
   
   private String filename;

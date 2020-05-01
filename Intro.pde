@@ -7,8 +7,16 @@ class Intro {
   boolean increasing = true;
   boolean running = false;
   
-  Intro(Runnable endCallback) {
+  private SinOsc osc1;
+  private SinOsc osc2;
+  private SinOsc osc3;
+  private float oscFreq = 20;
+  
+  Intro(PApplet app, Runnable endCallback) {
     this.endCallback = endCallback;
+    this.osc1 = new SinOsc(app);
+    this.osc2 = new SinOsc(app);
+    this.osc3 = new SinOsc(app);
 
     for (int i = 0; i < stars.length; i++) {
       stars[i] = new Star();
@@ -17,6 +25,17 @@ class Intro {
   
   void start() {
     running = true;
+    
+    osc1.amp(1f);
+    osc2.amp(1f / 2.5f);
+    osc3.amp(1f / 3.5f);
+    
+    osc1.freq(speed * 2);
+    osc2.freq(speed * 5);
+    osc3.freq(speed * 7);
+    osc1.play();
+    osc2.play();
+    osc3.play();
   }
   
   void show() {
@@ -25,6 +44,10 @@ class Intro {
     pushStyle();
     
     if (running) {
+      osc1.freq(speed * 2);
+      osc2.freq(speed * 5);
+      osc3.freq(speed * 7);
+      
       if (increasing) {
         speed *= 1.05;
         
@@ -36,9 +59,17 @@ class Intro {
           speed /= 1.05;
         } else {
           speed /= 1.075;
+          
+          float ampF = map(speed, 0, 100, 0, 1);
+          osc1.amp(ampF);
+          osc2.amp(ampF / 2.5f);
+          osc3.amp(ampF / 3.5f);
         }
         
         if (speed < 1) {
+          osc1.stop();
+          osc2.stop();
+          osc3.stop();
           endCallback.run();
         }
       }
