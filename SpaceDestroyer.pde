@@ -2,13 +2,6 @@ import processing.sound.*;
 
 PImage stars;
 
-PImage violetDust;
-PImage blueDust;
-PImage yellowDust;
-PImage hotNebula;
-PImage coldNebula;
-PImage smallPlanets;
-
 ArrayList<Planet> planets = new ArrayList<Planet>();
 Ship ship;
 
@@ -18,7 +11,7 @@ enum SimulationState {
   SHOOTING,
 }
 
-static SimulationState simulationState;
+SimulationState simulationState;
 
 Intro intro;
 
@@ -43,13 +36,6 @@ void setup() {
   stars = loadImage("stars.png");
   stars.resize(width, height);
 
-  violetDust = loadImage("violet_dust.png");
-  blueDust = loadImage("blue_dust.png");
-  yellowDust = loadImage("yellow_dust.png");
-  hotNebula = loadImage("hot_nebula.png");
-  coldNebula = loadImage("cold_nebula.png");
-  smallPlanets = loadImage("small_planets.png");
- 
   planets.add(new Planet(new PVector(1300, 200), ImageResource.SUN, 100, true));
   planets.add(new Planet(new PVector(1200, 450), ImageResource.RED_GIANT, 108, false));
   planets.add(new Planet(new PVector(390, 175), ImageResource.GAS_GIANT, 108, false));
@@ -122,21 +108,21 @@ void showMain(float opacity) {
   image(stars, 0, 0);
   
   if (simulationState == SimulationState.INTRO) {
-    image(violetDust, 0, 0);
-    image(blueDust, 0, 0);
-    image(yellowDust, 0, 0);
+    image(ImageResource.VIOLET_DUST.get(), 0, 0);
+    image(ImageResource.BLUE_DUST.get(), 0, 0);
+    image(ImageResource.YELLOW_DUST.get(), 0, 0);
   } else {
     pushStyle();
     tint(255, backgroundAnimation.get());
-    image(violetDust, 0, 0);
-    image(blueDust, 0, 0);
-    image(yellowDust, 0, 0);
+    image(ImageResource.VIOLET_DUST.get(), 0, 0);
+    image(ImageResource.BLUE_DUST.get(), 0, 0);
+    image(ImageResource.YELLOW_DUST.get(), 0, 0);
     popStyle();
   }
-  
-  image(hotNebula, 0, 0);
-  image(coldNebula, 0, 0);
-  image(smallPlanets, 0, 0);
+
+  image(ImageResource.HOT_NEBULA.get(), 0, 0);
+  image(ImageResource.COLD_NEBULA.get(), 0, 0);
+  image(ImageResource.SMALL_PLANETS.get(), 0, 0);
 
   for (Planet p : planets) {
     p.show();

@@ -1,37 +1,39 @@
 class Star {
-  float x;
-  float y;
-  float z;
-  
-  float pz;
-  
-  Star() {
+  private float x;
+  private float y;
+  private float z;
+
+  private float prevZ;
+
+  public Star() {
     x = random(-width, width);
     y = random(-height, height);
     z = random(width);
-    pz = z;
+    prevZ = z;
   }
 
-  void show(float speed, float opacity) {
-    float sx = map(x / z, 0, 1, 0, width);
-    float sy = map(y / z, 0, 1, 0, height);
-    
-    float px = map(x / pz, 0, 1, 0, width);
-    float py = map(y / pz, 0, 1, 0, height);
-    
+  public void show(float speed, float opacity) {
+    float x1 = map(x / z, 0, 1, 0, width);
+    float y1 = map(y / z, 0, 1, 0, height);
+
+    float x2 = map(x / prevZ, 0, 1, 0, width);
+    float y2 = map(y / prevZ, 0, 1, 0, height);
+
+    // Slightly red color when high speed, otherwise white.
     float inverse = 255 - map(speed, 0, 255, 0, 150);
     stroke(255, inverse, inverse, opacity);
-    line(px, py, sx, sy);
+
+    line(x2, y2, x1, y1);
   }
 
-  void update(float speed) {
-    pz = z;
+  public void update(float speed) {
+    prevZ = z;
     z = z - speed;
     if (z < 1) {
       x = random(-width, width);
       y = random(-height, height);
       z = width;
-      pz = z;
+      prevZ = z;
     }
   }
 }

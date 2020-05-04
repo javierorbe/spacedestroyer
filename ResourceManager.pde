@@ -34,6 +34,12 @@ enum ImageResource {
   ICE_GIANT("ice_giant.png"),
   GAS_GIANT("gas_giant.png"),
   DUST("dust.png"),
+  VIOLET_DUST("violet_dust.png"),
+  BLUE_DUST("blue_dust.png"),
+  YELLOW_DUST("yellow_dust.png"),
+  HOT_NEBULA("hot_nebula.png"),
+  COLD_NEBULA("cold_nebula.png"),
+  SMALL_PLANETS("small_planets.png"),
   ;
   
   private String filename;

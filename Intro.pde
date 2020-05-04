@@ -1,17 +1,17 @@
 class Intro {
 
-  Star[] stars = new Star[2500];
-  
-  Runnable endCallback;
-  float speed = 1;
-  boolean increasing = true;
-  boolean running = false;
-  
+  private Star[] stars = new Star[2500];
+
+  private Runnable endCallback;
+  private float speed = 1;
+  private boolean increasing = true;
+  private boolean running = false;
+
   private SinOsc osc1;
   private SinOsc osc2;
   private SinOsc osc3;
-  
-  Intro(PApplet app, Runnable endCallback) {
+
+  public Intro(PApplet app, Runnable endCallback) {
     this.endCallback = endCallback;
     this.osc1 = new SinOsc(app);
     this.osc2 = new SinOsc(app);
@@ -21,14 +21,13 @@ class Intro {
       stars[i] = new Star();
     }
   }
-  
-  void start() {
+
+  public void start() {
     running = true;
     
     osc1.amp(1f);
     osc2.amp(1f / 2.5f);
     osc3.amp(1f / 3.5f);
-    
     osc1.freq(speed * 2);
     osc2.freq(speed * 5);
     osc3.freq(speed * 7);
@@ -37,7 +36,7 @@ class Intro {
     osc3.play();
   }
   
-  void show() {
+  public void show() {
     translate(width / 2, height / 2);
     
     pushStyle();
