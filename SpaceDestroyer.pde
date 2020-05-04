@@ -22,7 +22,7 @@ static SimulationState simulationState;
 
 Intro intro;
 
-BouncingInteger backgroundAnimation = new BouncingInteger(200, 255, 255);
+BouncingInteger backgroundAnimation = new BouncingInteger(180, 255, 255);
 
 PFont titleFont;
 
@@ -30,6 +30,8 @@ Planet selectedPlanet = null;
 
 void setup() {
   size(1500, 750, P2D);
+  surface.setTitle("Space Destroyer");
+  surface.setResizable(false);
   frameRate(24);
 
   ImageResource.load(this);
@@ -59,7 +61,9 @@ void setup() {
   ship = new Ship(new PVector(width / 2, height / 2), loadImage("bullet.png"), new Runnable() {
     @Override
     public void run() {
-      selectedPlanet = null;
+      if (selectedPlanet != null && !selectedPlanet.isAlive()) {
+        selectedPlanet = null;
+      }
       simulationState = SimulationState.MAIN;
     }
   });
@@ -117,17 +121,17 @@ void showMain(float opacity) {
   
   image(stars, 0, 0);
   
-  if (simulationState == SimulationState.MAIN) {
+  if (simulationState == SimulationState.INTRO) {
+    image(violetDust, 0, 0);
+    image(blueDust, 0, 0);
+    image(yellowDust, 0, 0);
+  } else {
     pushStyle();
     tint(255, backgroundAnimation.get());
     image(violetDust, 0, 0);
     image(blueDust, 0, 0);
     image(yellowDust, 0, 0);
     popStyle();
-  } else {
-    image(violetDust, 0, 0);
-    image(blueDust, 0, 0);
-    image(yellowDust, 0, 0);
   }
   
   image(hotNebula, 0, 0);

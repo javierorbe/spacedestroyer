@@ -20,8 +20,8 @@ class Planet {
   // Asteriods position shift from the center, when planet is dead.
   private HashMap<Integer, PVector> asteroidPos = new HashMap<Integer, PVector>();
   private HashMap<Integer, Float> asteroidRot = new HashMap<Integer, Float>();
-  private BouncingFloat asteroidAnimationX = new BouncingFloat(-2, 2, 2, random(0.02, 0.05));
-  private BouncingFloat asteroidAnimationY = new BouncingFloat(-2, 2, 0, random(0.02, 0.05));
+  private BouncingFloat asteroidAnimationX = new BouncingFloat(-2, 2, random(-2, 2), random(0.03, 0.06));
+  private BouncingFloat asteroidAnimationY = new BouncingFloat(-2, 2, random(-2, 2), random(0.03, 0.06));
 
   Planet(PVector position, ImageResource resource, float realRadius, boolean rotateClockwise) {
     this.position = position;

@@ -10,7 +10,6 @@ class Intro {
   private SinOsc osc1;
   private SinOsc osc2;
   private SinOsc osc3;
-  private float oscFreq = 20;
   
   Intro(PApplet app, Runnable endCallback) {
     this.endCallback = endCallback;
@@ -44,9 +43,9 @@ class Intro {
     pushStyle();
     
     if (running) {
-      osc1.freq(speed * 2);
-      osc2.freq(speed * 5);
-      osc3.freq(speed * 7);
+      osc1.freq(speed);
+      osc2.freq(speed * 2);
+      osc3.freq(speed * 3);
       
       if (increasing) {
         speed *= 1.05;
