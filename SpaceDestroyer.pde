@@ -1,24 +1,20 @@
 import processing.sound.*;
 
-PImage stars;
-
-ArrayList<Planet> planets = new ArrayList<Planet>();
-Ship ship;
-
 enum SimulationState {
   INTRO,
   MAIN,
   SHOOTING,
 }
 
+PFont titleFont;
+
 SimulationState simulationState;
 
 Intro intro;
 
+ArrayList<Planet> planets = new ArrayList<Planet>();
+Ship ship;
 BouncingInteger backgroundAnimation = new BouncingInteger(180, 255, 255);
-
-PFont titleFont;
-
 Planet selectedPlanet = null;
 
 void setup() {
@@ -30,11 +26,7 @@ void setup() {
   ImageResource.load(this);
   AnimatedSpriteResource.load(this);
   SoundResource.load(this);
-
   titleFont = createFont("spacebar_font.ttf", 64);
- 
-  stars = loadImage("stars.png");
-  stars.resize(width, height);
 
   planets.add(new Planet(new PVector(1300, 200), ImageResource.SUN, 100, true));
   planets.add(new Planet(new PVector(1200, 450), ImageResource.RED_GIANT, 108, false));
@@ -44,7 +36,7 @@ void setup() {
   planets.add(new Planet(new PVector(660, 610), ImageResource.EXOPLANET2, 80, false));
   planets.add(new Planet(new PVector(425, 640), ImageResource.EXOPLANET3, 75, true));
 
-  ship = new Ship(new PVector(width / 2, height / 2), loadImage("bullet.png"), new Runnable() {
+  ship = new Ship(new PVector(width / 2, height / 2), new Runnable() {
     @Override
     public void run() {
       if (selectedPlanet != null && !selectedPlanet.isAlive()) {
@@ -53,8 +45,7 @@ void setup() {
       simulationState = SimulationState.MAIN;
     }
   });
- 
-  simulationState = SimulationState.INTRO;
+
   intro = new Intro(this, new Runnable() {
     @Override
     public void run() {
@@ -62,7 +53,8 @@ void setup() {
       intro = null;
     }
   });
-  
+
+  simulationState = SimulationState.INTRO;
   SoundResource.BACKGROUND.get().loop();
 }
 
@@ -78,7 +70,6 @@ void draw() {
   if (simulationState == SimulationState.INTRO) {
     if (intro.running) {
       if (!intro.increasing && intro.speed < 100) {
-        // float op = 255 - map(sqrt(intro.speed), 0, 10, 0, 255);
         float op = 255 - map(intro.speed, 0, 100, 0, 255);
         showMain(op);
       } else {
@@ -94,19 +85,19 @@ void draw() {
     }
     
     intro.show();
-  } else if (simulationState == SimulationState.MAIN || simulationState == SimulationState.SHOOTING) {
+  } else { // Not INTRO.
     showMain(255);
   }
 }
 
 void showMain(float opacity) {
   background(0);
-  
+
   pushStyle();
   tint(255, opacity);
   
-  image(stars, 0, 0);
-  
+  image(ImageResource.STARS.get(), 0, 0);
+
   if (simulationState == SimulationState.INTRO) {
     image(ImageResource.VIOLET_DUST.get(), 0, 0);
     image(ImageResource.BLUE_DUST.get(), 0, 0);
@@ -135,7 +126,7 @@ void showMain(float opacity) {
 }
 
 void keyPressed() {
-  if (key == ' ') {
+  if (key == ' ') { // Space bar.
     if (simulationState == SimulationState.INTRO) {
       intro.start();
     }
@@ -153,14 +144,14 @@ void mouseClicked() {
 
 void mouseMoved() {
   selectedPlanet = null;
-  
+
   for (Planet p : planets) {
     if (p.isAlive() && p.isMouseOver()) {
       selectedPlanet = p;
       break;
     }
   }
-  
+
   if (selectedPlanet != null) {
     cursor(HAND);
   } else {

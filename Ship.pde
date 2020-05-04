@@ -15,7 +15,6 @@ class Ship {
   Planet attackingPlanet;
   float rotationAngle;
   float rotationFactor;
-  PImage bulletImage;
   Bullet bullet;
 
   private Sprite idle;
@@ -23,10 +22,9 @@ class Ship {
   BouncingInteger idleAnimation = new BouncingInteger(-2, 2, 0, 2);
   private Runnable attackEndCallback;
   
-  Ship(PVector position, PImage bulletImage, Runnable attackEndCallback) {
+  Ship(PVector position, Runnable attackEndCallback) {
     this.position = position;
     this.sprite = new AnimatedSprite(AnimatedSpriteResource.ENEMY, 0.25, 12);
-    this.bulletImage = bulletImage;
     this.attackEndCallback = attackEndCallback;
     idle = new Sprite(ImageResource.ENEMY_IDLE, 0.25);
     state = ShipState.IDLE;
@@ -60,7 +58,7 @@ class Ship {
       if (rotationFactor >= 1) {
         state = ShipState.ATTACKING;
         SoundResource.SHOOT.get().play();
-        bullet = new Bullet(bulletImage, 0.1, position.copy(), rotationAngle, attackingPlanet.position, new Runnable() {
+        bullet = new Bullet(position.copy(), rotationAngle, 0.1, attackingPlanet.position, new Runnable() {
           @Override
           public void run() {
             attackingPlanet.explode();

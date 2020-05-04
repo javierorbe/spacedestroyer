@@ -45,10 +45,10 @@ class Intro {
       osc1.freq(speed);
       osc2.freq(speed * 2);
       osc3.freq(speed * 3);
-      
+
       if (increasing) {
         speed *= 1.05;
-        
+
         if (speed > 255) {
           increasing = false;
         }

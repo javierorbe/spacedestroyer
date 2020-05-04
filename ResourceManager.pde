@@ -25,7 +25,9 @@ enum SoundResource {
 }
 
 enum ImageResource {
+  STARS("stars.png"),
   ENEMY_IDLE("enemy_idle.png"),
+  BULLET("bullet.png"),
   SUN("sun.png"),
   RED_GIANT("red_giant.png"),
   EXOPLANET1("exoplanet1.png"),

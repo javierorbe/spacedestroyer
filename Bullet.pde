@@ -1,59 +1,66 @@
 class Bullet {
 
-  PImage sprite;
-  float origWidth;
-  float origHeight;
-  
-  float scaleFactor;
-  PVector position;
-  float angle;
-  PVector origPosition;
-  PVector destPosition;
-  
-  float lerpFactor = 0;
-  
-  Runnable reachCallback;
-  
-  Bullet(PImage sprite, float initialScaleFactor, PVector position, float angle, PVector destPosition, Runnable reachCallback) {
-    this.sprite = sprite;
-    origWidth = width * initialScaleFactor;
-    origHeight = height * initialScaleFactor;
-    scaleFactor = initialScaleFactor;
-    
+  private PVector position;
+  private float angle;
+
+  private float originWidth;
+  private float originHeight;
+
+  private PVector origin;
+  private PVector target;
+
+  private Runnable callback;
+
+  private float lerpFactor = 0;
+
+  /**
+   * Bullet.
+   * 
+   * @param position initial position
+   * @param angle    rotation angle
+   * @param scale    initial scale factor
+   * @param target   target position
+   * @param callback run when the bullet hits its target
+   */
+  Bullet(PVector position, float angle, float scale, PVector target, Runnable callback) {
     this.position = position;
-    origPosition = position.copy();
     this.angle = angle;
-    this.destPosition = destPosition;
-    
-    this.reachCallback = reachCallback;
+
+    originWidth = width * scale;
+    originHeight = height * scale;
+
+    this.origin = position.copy();
+    this.target = target;
+
+    this.callback = callback;
   }
-  
-  void show() {
+
+  public void show() {
     pushMatrix();
-    
+
     translate(position.x, position.y);
     rotate(angle);
 
-    float w = origWidth * (1 - lerpFactor);
-    float h = origHeight * (1 - lerpFactor);
+    float w = originWidth * (1 - lerpFactor);
+    float h = originHeight * (1 - lerpFactor);
 
     image(
-      sprite,
+      ImageResource.BULLET.get(),
       - w / 2,
       - h / 2,
       w,
       h
     );
-    
+
     popMatrix();
   }
-  
-  void update() {
+
+  public void update() {
     if (lerpFactor < 1) {
-      position = PVector.lerp(origPosition, destPosition, lerpFactor);
+      position = PVector.lerp(origin, target, lerpFactor);
       lerpFactor += 0.04;
     } else {
-      reachCallback.run();
+      callback.run();
     }
   }
 }
